@@ -1,0 +1,13 @@
+/**
+ * CustomField
+ */
+ul.user_group_check_any,
+input.radio_user_group_all:checked ~ ul.user_group_check_any {
+  display: none;
+}
+input.radio_user_group_any:checked ~ ul.user_group_check_any {
+  display: block;
+}
+ul.user_group_check_any li {
+  background: none;
+}
