@@ -39,6 +39,7 @@ class OperationHelperEventListener extends BcHelperEventListener
         $View->plugin    = 'Operation';
 
         $View->BcBaser->css('Operation.admin/style');
+        $View->BcBaser->js('Operation.admin/script');
 
         switch ($event->data['id']) {
         case 'SiteAdminEditForm':

@@ -94,7 +94,7 @@ class OperationModelEventListener extends BcModelEventListener
 
         $Model     = $event->subject();
         $modelName = $Model->name;
-        if (!in_array($modelName, ['Content', 'Site', 'UploaderFile', 'Dblog'])) return TRUE;
+        if (!in_array($modelName, ['Content', 'Site', 'UploaderFile', 'Dblog', 'BlogPost'])) return TRUE;
 
         $loginUser = BcUtil::loginUser();
         $userGroup = $loginUser['UserGroup']['name'];
@@ -123,14 +123,14 @@ class OperationModelEventListener extends BcModelEventListener
             if ($allowedUploads === TRUE) break;
 
             $event->data[0]['conditions'][] = [
-                'User.user_group_id' => $loginUser['user_group_id']
+                'User4Operation.user_group_id' => $loginUser['user_group_id']
             ];
             $event->data[0]['joins'][] = [
                 'type'  => 'LEFT',
                 'table' => 'users',
-                'alias' => 'User',
+                'alias' => 'User4Operation',
                 'conditions' => [
-                    'UploaderFile.user_id = User.id'
+                    'UploaderFile.user_id = User4Operation.id'
                 ]
             ];
             break;
@@ -141,6 +141,29 @@ class OperationModelEventListener extends BcModelEventListener
 
             $event->data[0]['conditions'][] = [
                 'User.user_group_id' => $loginUser['user_group_id']
+            ];
+            break;
+
+        case 'BlogPost':
+            $allowedBlogPosts = Configure::read('Operation.admin.allowedAllUserGroupBlogPosts');
+            if ($allowedBlogPosts === TRUE) break;
+
+            if (!empty($event->data[0]['fields'])
+                && ($event->data[0]['fields'] == 'MAX(BlogPost.no) AS max'
+                || (is_array($event->data[0]['fields']) && in_array('MAX(BlogPost.no) AS max', $event->data[0]['fields'])))) {
+                break;
+            }
+
+            $event->data[0]['conditions'][] = [
+                'User4Operation.user_group_id' => $loginUser['user_group_id']
+            ];
+            $event->data[0]['joins'][] = [
+                'type'  => 'LEFT',
+                'table' => 'users',
+                'alias' => 'User4Operation',
+                'conditions' => [
+                    'BlogPost.user_id = User4Operation.id'
+                ]
             ];
             break;
         }

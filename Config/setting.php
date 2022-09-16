@@ -18,8 +18,9 @@ $config['Operation'] = [
         'adminsName' => [
             'admins'
         ],
-        'allowedAdminAllOperation'   => TRUE,
-        'allowedAllUserGroupUploads' => FALSE,
-        'allowedAllUserGroupDblogs'  => FALSE
+        'allowedAdminAllOperation'     => TRUE,
+        'allowedAllUserGroupUploads'   => FALSE,
+        'allowedAllUserGroupDblogs'    => FALSE,
+        'allowedAllUserGroupBlogPosts' => TRUE
     ]
 ];

@@ -62,7 +62,7 @@ class OperationHelper extends AppHelper
      */
     public function setCustomField()
     {
-        $Operation = ClassRegistry::init('Operation.Operation');
+        $Operation  = ClassRegistry::init('Operation.Operation');
 
         $siteId = $this->getSiteId();
         $userGroup          = $Operation->findUserGroups();
@@ -75,12 +75,12 @@ class OperationHelper extends AppHelper
                 [
                     'name'  => __d('baser', '全ユーザーグループ'),
                     'value' => 'ALL',
-                    'class' => 'radio_user_group_all'
+                    'class' => 'bca-radio__input'
                 ],
                 [
                     'name'  => __d('baser', '特定のユーザーグループ'),
                     'value' => 0,
-                    'class' => 'radio_user_group_any'
+                    'class' => 'bca-radio__input'
                 ]
             ]
         ];
@@ -92,19 +92,19 @@ class OperationHelper extends AppHelper
 
         $anyUserGroupOption = [];
         foreach ($userGroup as $userGroupId => $array) {
-            $isChecked   = (!empty($array['Operation'][$siteId])) ? 'checked' : NULL;
+            $isChecked   = (!empty($array['Operation'][$siteId]) || in_array($array['UserGroup']['name'], $adminsName) && $allowedAdminAllOperation === TRUE) ? 'checked' : NULL;
             $isDisabled  = (in_array($array['UserGroup']['name'], $adminsName) && $allowedAdminAllOperation === TRUE) ? 'disabled' : NULL;
             $anyUserGroupOption[] = [
                 'option' => [
                     'type'  => 'checkbox',
+                    'class' => 'bca-checkbox__input',
                     'value' => 1,
+                    'label' => $array['UserGroup']['title'],
                     $isChecked,
                     $isDisabled
                 ],
-                'name'   => 'Operation.user_group.'.$array['UserGroup']['id'],
-                'label'  => $array['UserGroup']['title']
+                'name'   => 'Operation.user_group.'.$array['UserGroup']['id']
             ];
-
         }
 
         $data = [
@@ -114,7 +114,7 @@ class OperationHelper extends AppHelper
             ]
         ];
 
-        $this->BcBaser->element('sites/form', $data);
+        $this->BcBaser->element('Operation.sites/input_operation', $data);
         return;
     } // end function setCustomField
 

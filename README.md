@@ -19,9 +19,10 @@ $config['Operation'] = [
         'adminsName' => [
             'admins'
         ],
-        'allowedAdminAllOperation'   => TRUE,
-        'allowedAllUserGroupUploads' => FALSE,
-        'allowedAllUserGroupDblogs'  => FALSE
+        'allowedAdminAllOperation'     => TRUE,
+        'allowedAllUserGroupUploads'   => FALSE,
+        'allowedAllUserGroupDblogs'    => FALSE,
+        'allowedAllUserGroupBlogPosts' => TRUE
     ]
 ];
 ```
@@ -45,3 +46,9 @@ $config['Operation'] = [
 `Operation.admin.allowedAdminAllOperation` が TRUE の場合、管理者権限ユーザーグループは全アカウントのログを表示します。
 - TRUE : 全アカウントのログを表示します。
 - FALSE : 同じユーザーグループのアカウントのログのみを表示します。
+
+### Operation.admin.allowedAllUserGroupBlogPosts
+ブログ記事一覧に表示するブログ記事を設定します。  
+`Operation.admin.allowedAdminAllOperation` が TRUE の場合、管理者権限ユーザーグループは全アカウントのブログ記事を表示します。
+- TRUE : 全アカウントのブログ記事を表示します。
+- FALSE : 同じユーザーグループのアカウントのブログ記事のみを表示します。
